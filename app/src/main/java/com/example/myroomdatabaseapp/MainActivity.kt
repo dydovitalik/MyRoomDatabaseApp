@@ -27,15 +27,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testDatabase() {
-        //  CREATE
+        //  CREATE one by one
         val restaurantMenu1 = RestaurantMenu(1,"McMuffin Meal",6.99f,200,1)
         val restaurantMenu2 = RestaurantMenu(2,"Spaghettios Pizza",13.99f,150,1)
         val restaurantMenu3 = RestaurantMenu(3,"McNuggets",3.99f, 100, 1)
-
-        val restaurantMenus = mutableListOf<RestaurantMenu>()
-        restaurantMenus.add(restaurantMenu1)
-        restaurantMenus.add(restaurantMenu2)
-        restaurantMenus.add(restaurantMenu3)
 
         db.restaurantMenuDao().insert(restaurantMenu1)
         log("insert $restaurantMenu1")
@@ -44,20 +39,26 @@ class MainActivity : AppCompatActivity() {
         db.restaurantMenuDao().insert(restaurantMenu3)
         log("insert $restaurantMenu3")
 
+        // CREATE all at once
+        val restaurantMenus = mutableListOf<RestaurantMenu>()
+        restaurantMenus.add(restaurantMenu1)
+        restaurantMenus.add(restaurantMenu2)
+        restaurantMenus.add(restaurantMenu3)
+
         db.restaurantMenuDao().insert(restaurantMenus)
         log("insert $restaurantMenus")
 
-        //UPDATE
+        //UPDATE second
         val modifyUser = RestaurantMenu(2,"Spaghettios Pizza",13.99f,150,1)
         db.restaurantMenuDao().update(modifyUser)
         log("update $restaurantMenu2")
 
-        //DELETE
+        //DELETE third
         db.restaurantMenuDao().delete(restaurantMenu3)
         log("delete $restaurantMenu3")
 
 
-        //READ
+        //READ all
         val readrestaurantMenus = db.restaurantMenuDao().getAll()
         for (restaurantMenu in readrestaurantMenus){
             log("read $restaurantMenu")
